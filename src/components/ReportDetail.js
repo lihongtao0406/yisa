@@ -42,7 +42,7 @@ const ReportDetail = () => {
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 15, 15, maxWidth, maxHeight);
   
     // Save the PDF
-    pdf.save(`${reportData.client_name}(${reportData.date}).pdf`);
+    pdf.save(`${reportData.client_name}(${reportData.date})-${reportData.support_provider}.pdf`);
   };
 
   if (!reportData) {
