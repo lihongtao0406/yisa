@@ -121,11 +121,18 @@ const AddPayrun = () => {
   };
 
   const handleSearchButtonClick = async () => {
+
+    if (employeeName.trim() === '') {
+      // Handle the case when the value is empty
+      console.log('Employee name is required!');
+      window.alert('Employee name is required!');
+      return;
+    }
     console.log(startDate);
     try {
       // Fetch data from the backend API based on search criteria
-      const formattedStartDate = formatDateForBackend(startDate);
-      const formattedEndDate = formatDateForBackend(endDate);
+      const formattedStartDate = startDate ? formatDateForBackend(startDate) : '';
+      const formattedEndDate = endDate ? formatDateForBackend(endDate) : '';
       const response = await fetch(`http://127.0.0.1:8000/invoices/employee?start_date=${formattedStartDate}&end_date=${formattedEndDate}&employee=${employeeName.trim()}`);
       const data = await response.json();
       setRows(data); // Assuming that the response is an array of objects representing rows

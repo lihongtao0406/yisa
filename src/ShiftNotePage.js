@@ -87,7 +87,7 @@ const ShiftNotePage = () => {
   const searchButtonClick = () => {
     // Log the selected item value to the console
     console.log('Selected Item:', selectedItem);
-    fetchClientData(selectedItem, page);
+    fetchClientData(selectedItem, 1);
   };
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const ShiftNotePage = () => {
             ))}
           </Select>
           </FormControl>
-          <Button variant="contained" color="primary" onClick={searchButtonClick}>
+          <Button variant="contained" color="secondary" onClick={searchButtonClick}>
             Display Info
           </Button>
         </div>

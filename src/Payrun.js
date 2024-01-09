@@ -42,8 +42,8 @@ const Payrun = () => {
     console.log(startDate);
     try {
       // Fetch data from the backend API based on search criteria
-      const formattedStartDate = formatDateForBackend(startDate);
-      const formattedEndDate = formatDateForBackend(endDate);
+      const formattedStartDate = startDate ? formatDateForBackend(startDate) : '';
+      const formattedEndDate = endDate ? formatDateForBackend(endDate) : '';
       const response = await fetch(`http://127.0.0.1:8000/payruns?start_date=${formattedStartDate}&end_date=${formattedEndDate}&employee=${employeeName.trim()}`);
       const data = await response.json();
       setRows(data); // Assuming that the response is an array of objects representing rows
@@ -81,7 +81,7 @@ const Payrun = () => {
         </div>
         <div style={{margin: '10px' }}>
           <Button variant="contained" color="error" onClick={handleSearchButtonClick}>
-            Search
+            Search Payrun
           </Button>
         </div>
       </div>

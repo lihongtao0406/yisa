@@ -11,7 +11,7 @@ import ReportDetail from './components/ReportDetail';
 import ShiftNotePage from './ShiftNotePage';
 
 const Layout = () => {
-  const [pageTitle, setPageTitle] = useState('Home');
+  const [pageTitle, setPageTitle] = useState('Client Notes');
 
   const handleMenuClick = (title) => {
     setPageTitle(title);
@@ -25,7 +25,7 @@ const Layout = () => {
           <h3>Menu</h3>
           <ul>
             <li>
-              <Link to="/shiftnote" onClick={() => handleMenuClick('Client Notes')}>
+              <Link to="/" onClick={() => handleMenuClick('Client Notes')}>
               Client Notes
               </Link>
             </li>
@@ -40,7 +40,7 @@ const Layout = () => {
               </Link>
             </li>
             <li>
-              <Link to="/" onClick={() => handleMenuClick('All Notes')}>
+              <Link to="/allnote" onClick={() => handleMenuClick('All Notes')}>
                 All Notes
               </Link>
             </li>
@@ -52,8 +52,8 @@ const Layout = () => {
           <AppBar pageTitle={pageTitle} />
           <div style={{ flex: 1, overflow: 'auto' }}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/shiftnote" element={<ShiftNotePage />} />
+              <Route path="/allnote" element={<Home />} />
+              <Route path="/" element={<ShiftNotePage />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/payrun" element={<Payrun />} />
               <Route path="/addreport" element={<AddReport />} />
