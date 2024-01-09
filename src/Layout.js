@@ -8,6 +8,7 @@ import Payrun from './Payrun';
 import AddReport from './AddReport';
 import AddPayrun from './AddPayrun';
 import ReportDetail from './components/ReportDetail';
+import ShiftNotePage from './ShiftNotePage';
 
 const Layout = () => {
   const [pageTitle, setPageTitle] = useState('Home');
@@ -24,8 +25,8 @@ const Layout = () => {
           <h3>Menu</h3>
           <ul>
             <li>
-              <Link to="/" onClick={() => handleMenuClick('Home')}>
-                Home
+              <Link to="/shiftnote" onClick={() => handleMenuClick('Client Notes')}>
+              Client Notes
               </Link>
             </li>
             <li>
@@ -38,6 +39,11 @@ const Layout = () => {
               Payrun
               </Link>
             </li>
+            <li>
+              <Link to="/" onClick={() => handleMenuClick('All Notes')}>
+                All Notes
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -47,6 +53,7 @@ const Layout = () => {
           <div style={{ flex: 1, overflow: 'auto' }}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/shiftnote" element={<ShiftNotePage />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/payrun" element={<Payrun />} />
               <Route path="/addreport" element={<AddReport />} />
