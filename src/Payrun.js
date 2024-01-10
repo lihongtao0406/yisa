@@ -20,6 +20,7 @@ const columns = [
   { field: 'date', headerName: 'Date', width: 120, sortable: true, sortComparator: dateComparator },
   { field: 'total_hours', headerName: 'Total Hours', width: 120 },
   { field: 'total_km', headerName: 'Total KM', width: 120 },
+  { field: 'total_remittance', headerName: 'Total Remittance', width: 120 },
 ];
 
 const Payrun = () => {
