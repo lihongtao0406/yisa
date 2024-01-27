@@ -9,9 +9,10 @@ import AddReport from './AddReport';
 import AddPayrun from './AddPayrun';
 import ReportDetail from './components/ReportDetail';
 import ShiftNotePage from './ShiftNotePage';
+import AddInvoice from './AddInvoice';
 
 const Layout = () => {
-  const [pageTitle, setPageTitle] = useState('Client Notes');
+  const [pageTitle, setPageTitle] = useState('Invoice');
 
   const handleMenuClick = (title) => {
     setPageTitle(title);
@@ -25,13 +26,8 @@ const Layout = () => {
           <h3>Menu</h3>
           <ul>
             <li>
-              <Link to="/" onClick={() => handleMenuClick('Client Notes')}>
-              Client Notes
-              </Link>
-            </li>
-            <li>
-              <Link to="/invoice" onClick={() => handleMenuClick('Invoice')}>
-                Invoice
+              <Link to="/" onClick={() => handleMenuClick('Invoice')}>
+              Invoice
               </Link>
             </li>
             <li>
@@ -53,11 +49,11 @@ const Layout = () => {
           <div style={{ flex: 1, overflow: 'auto' }}>
             <Routes>
               <Route path="/allnote" element={<Home />} />
-              <Route path="/" element={<ShiftNotePage />} />
-              <Route path="/invoice" element={<Invoice />} />
+              <Route path="/" element={<Invoice />} />
               <Route path="/payrun" element={<Payrun />} />
               <Route path="/addreport" element={<AddReport />} />
               <Route path="/addpayrun" element={<AddPayrun />} />
+              <Route path="/addinvoice" element={<AddInvoice />} />
               <Route path="/reportdetail/:id" element={<ReportDetail />} /> {/* 映射 ReportDetail 组件 */}
             </Routes>
           </div>

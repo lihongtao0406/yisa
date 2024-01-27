@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DataGrid, GridToolbar, GridPagination } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useNavigate } from 'react-router-dom';
 
 const dateComparator = (date1, date2) => {
   const [day1, month1, year1] = date1.split('/').map(Number);
@@ -14,15 +15,17 @@ const dateComparator = (date1, date2) => {
 };
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  // { field: 'id', headerName: 'ID', width: 70 },
   { field: 'client', headerName: 'Client', width: 130 },
   { field: 'employee', headerName: 'Employee', width: 130 },
+  { field: 'serviceType', headerName: 'Service Type', width: 120 },
   { field: 'date', headerName: 'Date', width: 120, sortable: true, sortComparator: dateComparator },
   { field: 'hours', headerName: 'Hours', width: 120 },
   { field: 'travel_time', headerName: 'Travel Time', width: 120 },
   { field: 'travel_km', headerName: 'Travel KM', width: 120 },
   { field: 'remittance', headerName: 'Remittance Price', width: 120 },
-  { field: 'shiftreport_id', headerName: 'Shift Report ID', width: 120 },
+  // { field: 'shiftreport_id', headerName: 'Shift Report ID', width: 120 },
+  { field: 'notes', headerName: 'Notes', width: 120 },
 ];
 
 
@@ -34,6 +37,12 @@ const Invoice = () => {
   const formatDateForBackend = (dateString) => {
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
+  };
+    const navigate = useNavigate();
+
+  const handleAddButtonClick = () => {
+    // Implement the logic for adding a new item here
+    navigate('/addinvoice');
   };
 
   const handleSearchButtonClick = async () => {
@@ -81,6 +90,11 @@ const Invoice = () => {
         <div style={{margin: '10px' }}>
           <Button variant="contained" color="primary" onClick={handleSearchButtonClick}>
             Search Invoice
+          </Button>
+        </div>
+        <div style={{ marginLeft: 'auto', margin: '10px' }}>
+          <Button variant="contained" color="secondary" onClick={handleAddButtonClick}>
+            +ADD new invoice
           </Button>
         </div>
       </div>
