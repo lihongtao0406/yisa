@@ -198,6 +198,7 @@ const AddInvoice = () => {
                             value={formData.serviceType}
                             onChange={handleChange}
                             label="Service Type"
+                            required
                         >
                             <MenuItem value="Social support">Social support</MenuItem>
                             <MenuItem value="Non face to face">Non face to face</MenuItem>

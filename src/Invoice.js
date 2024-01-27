@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid, GridToolbar, GridPagination } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -61,6 +61,23 @@ const Invoice = () => {
     }
   };
 
+  useEffect(() => {
+    // Fetch all invoices when the component mounts
+    const fetchAllInvoices = async () => {
+      try {
+        const formattedStartDate = startDate ? formatDateForBackend(startDate) : '';
+        const formattedEndDate = endDate ? formatDateForBackend(endDate) : '';
+        const response = await fetch(`http://127.0.0.1:8000/invoices?start_date=${formattedStartDate}&end_date=${formattedEndDate}&client=${clientName.trim()}`);
+        const data = await response.json();
+        setRows(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchAllInvoices();
+  }, [clientName, endDate, startDate]);
+
   return (
     <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'flex', justifyContent: 'start', margin: '10px' }}>
@@ -88,7 +105,7 @@ const Invoice = () => {
           />&nbsp;&nbsp;&nbsp;
         </div>
         <div style={{margin: '10px' }}>
-          <Button variant="contained" color="primary" onClick={handleSearchButtonClick}>
+          <Button variant="contained" color="primary" onClick={handleSearchButtonClick} style={{display:'None'}}>
             Search Invoice
           </Button>
         </div>
