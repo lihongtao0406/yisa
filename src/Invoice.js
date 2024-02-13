@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridToolbar, GridPagination } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,8 @@ const dateComparator = (date1, date2) => {
   return dateObject1.getTime() - dateObject2.getTime();
 };
 
-const columns = [
-  // { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'client', headerName: 'Client', width: 130 },
-  { field: 'employee', headerName: 'Employee', width: 130 },
-  { field: 'serviceType', headerName: 'Service Type', width: 120 },
-  { field: 'date', headerName: 'Date', width: 120, sortable: true, sortComparator: dateComparator },
-  { field: 'hours', headerName: 'Hours', width: 120 },
-  { field: 'travel_time', headerName: 'Travel Time', width: 120 },
-  { field: 'travel_km', headerName: 'Travel KM', width: 120 },
-  { field: 'remittance', headerName: 'Remittance Price', width: 120 },
-  // { field: 'shiftreport_id', headerName: 'Shift Report ID', width: 120 },
-  { field: 'notes', headerName: 'Notes', width: 120 },
-];
+
+
 
 
 const Invoice = () => {
@@ -34,6 +23,8 @@ const Invoice = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [rows, setRows] = useState([]);
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState(null); // To store the ID of the selected invoice for deletion
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const formatDateForBackend = (dateString) => {
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
@@ -43,6 +34,43 @@ const Invoice = () => {
   const handleAddButtonClick = () => {
     // Implement the logic for adding a new item here
     navigate('/addinvoice');
+  };
+
+  const handleDeleteClick = (id) => {
+    setSelectedInvoiceId(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      // Send a DELETE request to your backend API to delete the invoice with the selectedInvoiceId
+      const response = await fetch(`http://127.0.0.1:8000/invoices/${selectedInvoiceId}`, {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        console.log(`Invoice with ID ${selectedInvoiceId} deleted successfully`);
+              // Fetch the updated list of invoices after deletion
+      const updatedResponse = await fetch(`http://127.0.0.1:8000/invoices?start_date=${startDate}&end_date=${endDate}&client=${clientName.trim()}`);
+      const updatedData = await updatedResponse.json();
+      setRows(updatedData);
+        // Perform any additional actions, such as updating the UI or refreshing the invoice list
+      } else {
+        console.error(`Failed to delete invoice with ID ${selectedInvoiceId}`);
+        // Handle error, maybe display an error message to the user
+      }
+    } catch (error) {
+      console.error('Error deleting invoice:', error);
+      // Handle error, maybe display an error message to the user
+    } finally {
+      // Close the delete confirmation dialog
+      setIsDeleteDialogOpen(false);
+    }
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setSelectedInvoiceId(null);
+    setIsDeleteDialogOpen(false);
   };
 
   const handleSearchButtonClick = async () => {
@@ -77,6 +105,35 @@ const Invoice = () => {
 
     fetchAllInvoices();
   }, [clientName, endDate, startDate]);
+
+  const columns = [
+    // { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'client', headerName: 'Client', width: 130 },
+    { field: 'employee', headerName: 'Employee', width: 130 },
+    { field: 'serviceType', headerName: 'Service Type', width: 120 },
+    { field: 'date', headerName: 'Date', width: 120, sortable: true, sortComparator: dateComparator },
+    { field: 'hours', headerName: 'Hours', width: 120 },
+    { field: 'travel_time', headerName: 'Travel Time', width: 120 },
+    { field: 'travel_km', headerName: 'Travel KM', width: 120 },
+    { field: 'remittance', headerName: 'Remittance Price', width: 120 },
+    // { field: 'shiftreport_id', headerName: 'Shift Report ID', width: 120 },
+    { field: 'notes', headerName: 'Notes', width: 120 },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 120,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="error"
+          size="small"
+          onClick={() => handleDeleteClick(params.row.id)}
+        >
+          Delete
+        </Button>
+      ),
+    },
+  ];
 
   return (
     <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -129,6 +186,23 @@ const Invoice = () => {
           Pagination: (props) => <GridPagination {...props} />,
         }}
       />
+            {/* Delete Confirmation Dialog */}
+            <Dialog open={isDeleteDialogOpen} onClose={handleCloseDeleteDialog}>
+        <DialogTitle>Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this invoice?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
