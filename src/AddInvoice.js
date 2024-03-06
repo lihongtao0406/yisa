@@ -43,6 +43,11 @@ const AddInvoice = () => {
     
         const newDate = new Date(formData.date);
         const formattedDate = newDate.toLocaleDateString('en-GB');
+
+        // Ensure that remittance is set to 0 if it's undefined, null, or an empty string
+        const remittanceValue = formData.remittance ? parseFloat(formData.remittance) : 0;
+
+
     
         try {
             const response = await fetch('http://127.0.0.1:8000/api/shift_invoice', {
@@ -73,7 +78,7 @@ const AddInvoice = () => {
                         hours: parseFloat(formData.hours),
                         travel_time: parseFloat(formData.travelHours),
                         travel_km: Math.ceil(formData.travelKm),
-                        remittance: parseFloat(formData.remittance),
+                        remittance: remittanceValue,
                         invoice_num: "",
                         serviceType:formData.serviceType,
                         notes:formData.notes
