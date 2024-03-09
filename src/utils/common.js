@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://127.0.0.1:8001"
+const BACKEND_URL = "https://yisabackend.cpolar.top"
 
 export {
     BACKEND_URL
