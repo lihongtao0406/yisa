@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { BACKEND_URL } from "../utils/common";
 
 const ReportDetail = () => {
   // 使用 useParams 获取路由参数中的 id
@@ -11,7 +12,7 @@ const ReportDetail = () => {
   useEffect(() => {
     const fetchReportData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/shiftreport/${id}`);
+        const response = await fetch(`${BACKEND_URL}/shiftreport/${id}`);
         const data = await response.json();
         setReportData(data); // 假设返回的数据是一个对象，包含报告的详细信息
       } catch (error) {

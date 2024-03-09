@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { BACKEND_URL } from "./utils/common"
 
 const AddInvoice = () => {
     const navigate = useNavigate();
@@ -50,7 +51,7 @@ const AddInvoice = () => {
 
     
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/shift_invoice', {
+            const response = await fetch(`${BACKEND_URL}/api/shift_invoice`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +88,7 @@ const AddInvoice = () => {
             });
     
             // Second POST request
-            // const response2 = await fetch('http://127.0.0.1:8000/invoice', {
+            // const response2 = await fetch('BACKEND_URL/invoice', {
             // method: 'POST',
             // headers: {
             //     'Content-Type': 'application/json',
@@ -205,8 +206,15 @@ const AddInvoice = () => {
                             label="Service Type"
                             required
                         >
-                            <MenuItem value="Social support">Social support</MenuItem>
-                            <MenuItem value="Non face to face">Non face to face</MenuItem>
+                            <MenuItem value="1.In-Home support">{"1.In-Home support"}</MenuItem>
+                            <MenuItem value="2.Social and Rec Activities">{"2.Social and Rec Activities"}</MenuItem>
+                            <MenuItem value="3.Non face to face">{"3.Non face to face"}</MenuItem>
+                            <MenuItem value="4.Provider Travel(Parking)">{"4.Provider Travel(Parking)"}</MenuItem>
+                            <MenuItem value="5.In-Home Support(Shadow Shift)">{"5.In-Home Support(Shadow Shift)"}</MenuItem>
+                            <MenuItem value="6.Social and Rec Activities(Shadow Shift)">{"6.Social and Rec Activities(Shadow Shift)"}</MenuItem>
+                            <MenuItem value="7.Office Supplies">{"7.Office Supplies"}</MenuItem>
+                            <MenuItem value="8.Social&Rec-High Intensity">{"8.Social&Rec-High Intensity"}</MenuItem>
+                            <MenuItem value="9.Respite">{"9.Respite"}</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>

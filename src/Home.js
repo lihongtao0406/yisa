@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { BACKEND_URL } from "./utils/common";
 
 const dateComparator = (date1, date2) => {
   const [day1, month1, year1] = date1.split('/').map(Number);
@@ -55,7 +56,7 @@ const Home = () => {
     // Fetch data from the backend API based on the current page
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/page/shift_reports/?page=${page}&pageSize=${pageSize}`);
+        const response = await fetch(`${BACKEND_URL}/page/shift_reports/?page=${page}&pageSize=${pageSize}`);
         const data = await response.json();
         setRows(data.results); // Assuming that the response is an array of objects representing rows
         setTotalRows(data.total); // Assuming that the response contains the total number of rows

@@ -8,7 +8,7 @@ import Payrun from './Payrun';
 import AddReport from './AddReport';
 import AddPayrun from './AddPayrun';
 import ReportDetail from './components/ReportDetail';
-import ShiftNotePage from './ShiftNotePage';
+// import ShiftNotePage from './ShiftNotePage';
 import AddInvoice from './AddInvoice';
 
 const Layout = () => {

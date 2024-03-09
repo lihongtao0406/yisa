@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from "./utils/common"
 
 const AddReport = () => {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ const AddReport = () => {
         const formattedDate = newDate.toLocaleDateString('en-GB');
     
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/shift_invoice', {
+            const response = await fetch(`${BACKEND_URL}/api/shift_invoice`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +75,7 @@ const AddReport = () => {
             });
     
             // Second POST request
-            // const response2 = await fetch('http://127.0.0.1:8000/invoice', {
+            // const response2 = await fetch('BACKEND_URL/invoice', {
             // method: 'POST',
             // headers: {
             //     'Content-Type': 'application/json',
